@@ -10,8 +10,20 @@
 
 
 #include <stdio.h>
+
 #if defined(THINLOOM)
+
 #include "HardwareProfile.h"
+#include "TCPIP Stack/TCPIP.h"
+#include <GenericTypeDefs.h>
+static WORD fp;
+
+#else
+
+#define BYTE unsigned char
+#define WORD long
+static FILE *fp;
+
 #endif
 
 #define MAX_STACK (16u)
@@ -22,18 +34,7 @@ char reglist[USER_REGISTERS][3] = {"m1", "m2", "m3", "m4", "ms", "ls", "ax", "ay
 
 #define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
 
-#if defined(THINLOOM)
 
-#include "TCPIP Stack/TCPIP.h"
-#include <GenericTypeDefs.h>
-static WORD fp;
-#else
-
-#define BYTE unsigned char
-#define WORD long
-static FILE *fp;
-
-#endif
 
 static BYTE fast[32];
 static BYTE registers[USER_REGISTERS];
