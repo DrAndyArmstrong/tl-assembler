@@ -1,0 +1,105 @@
+~inc:header.inc~
+<script language="Javascript" type="text/javascript">
+<!--
+
+function dotimer()
+{
+	setTimeout("javascript:makeGetRequest('000116',0)",2500);
+}
+
+
+function createRequestObject() {
+    var tmpXmlHttpObject;
+    
+    //depending on what the browser supports, use the right way to create the XMLHttpRequest object
+    if (window.XMLHttpRequest) { 
+        // Mozilla, Safari would use this method ...
+        tmpXmlHttpObject = new XMLHttpRequest();
+	
+    } else if (window.ActiveXObject) { 
+        // IE would use this method ...
+        tmpXmlHttpObject = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    return tmpXmlHttpObject;
+}
+
+//call the above function to create the XMLHttpRequest object
+var http = createRequestObject();
+
+function makeGetRequest(dataparameters, iswrite) {
+    //make a connection to the server ... specifying that you intend to make a GET request 
+    //to the server. Specifiy the page name and the URL parameters to send
+    if (iswrite==1)
+    {  
+    	http.open('get', 'api.htm?w=' + dataparameters);
+    }
+    else
+    {
+    	http.open('get', 'api.htm?r=' + dataparameters);
+	dotimer();
+    }
+	
+    //assign a handler for the response
+    http.onreadystatechange = processResponse;
+	
+    //actually send the request to the server
+    http.send(null);
+}
+
+function processResponse() {
+    //check if the response has been received from the server
+    if(http.readyState == 4){
+	
+        //read and assign the response from the server
+        var response = http.responseText;
+		
+        //do additional parsing of the response, if needed
+
+	  var position = response.indexOf('R')
+
+	  if (position > 0)
+	  {
+		var statustext = "";
+		statustext = String(response);
+		statustext = statustext.substr(position+25,2);
+		switch(statustext )
+		{
+			case "01":
+				  statustext="Status: Open"
+				  break;
+			case "02":
+				  statustext="Status: Stop"
+				  break;
+			case "03":
+				  statustext="Status: Close"
+				  break;
+			default:
+				  statustext="Status: Unknown"
+		}
+		document.getElementById('stats').innerHTML = statustext;
+	  }
+
+		
+        //If the server returned an error message like a 404 error, that message would be shown within the div tag!!. 
+        //So it may be worth doing some basic error before setting the contents of the <div>
+    }
+}
+
+dotimer();
+
+-->
+</script>
+
+<div id="content">
+
+<h1>Garage Door Control</h1>
+
+<div id="stats">Status: <i>Please Wait</i></div><br>
+
+&bull; <a href="javascript:makeGetRequest('00011501',1)">Open Door</a><br>
+&bull; <a href="javascript:makeGetRequest('00011503',1)">Close Door</a><br>
+&bull; <a href="javascript:makeGetRequest('00011502',1)">STOP Door</a><br>
+
+</div>
+~inc:footer.inc~

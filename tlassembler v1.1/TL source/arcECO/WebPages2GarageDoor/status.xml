@@ -1,0 +1,10 @@
+<response>
+<btn0>~btn(0)~</btn0>
+<btn1>~btn(1)~</btn1>
+<btn2>~btn(2)~</btn2>
+<btn3>~btn(3)~</btn3>
+<vin0>~voltage~</vin0>
+<tem0>~ctemp~</tem0>
+<tim0>~ctime~</tim0>
+<step>~r(00,04,00)~</step>
+</response>
