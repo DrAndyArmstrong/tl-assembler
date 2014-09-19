@@ -550,6 +550,9 @@ if (i > size && runprogram==1)
 #else
 printtl("<PROGRAM END>");
 printtl("\r\n\r\n");
-fclose(fp);
+if (fp)
+{
+	fclose(fp);
+}
 #endif
 }
