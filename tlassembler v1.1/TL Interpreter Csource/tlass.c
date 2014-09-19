@@ -10,7 +10,9 @@
 
 
 #include <stdio.h>
+#if defined(THINLOOM)
 #include "HardwareProfile.h"
+#endif
 
 #define MAX_STACK (16u)
 #define MAX_CALL_STACK (16u)
